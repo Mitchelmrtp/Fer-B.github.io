@@ -1,0 +1,64 @@
+﻿import { DataTypes } from 'sequelize';
+import sequelize from '../config/dataBase.js';
+
+const CartItem = sequelize.define('CartItem', {
+    id: {
+        type: DataTypes.BIGINT,
+        primaryKey: true,
+        autoIncrement: true,
+    },
+    cartId: {
+        type: DataTypes.BIGINT,
+        allowNull: false,
+        references: {
+            model: 'carts',
+            key: 'id'
+        }
+    },
+    productId: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        references: {
+            model: 'products',
+            key: 'id'
+        }
+    },
+    quantity: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        defaultValue: 1,
+        validate: {
+            min: 1
+        }
+    },
+    unitPrice: {
+        type: DataTypes.DECIMAL(10, 2),
+        allowNull: false,
+    },
+    totalPrice: {
+        type: DataTypes.DECIMAL(10, 2),
+        allowNull: false,
+    },
+    createdAt: {
+        type: DataTypes.DATE,
+        allowNull: false,
+        defaultValue: DataTypes.NOW,
+    },
+    updatedAt: {
+        type: DataTypes.DATE,
+        allowNull: false,
+        defaultValue: DataTypes.NOW,
+    }
+}, {
+    timestamps: true,
+    tableName: 'cart_items',
+    indexes: [
+        {
+            unique: true,
+            fields: ['cartId', 'productId'],
+            name: 'unique_product_per_cart'
+        }
+    ]
+});
+
+export default CartItem;

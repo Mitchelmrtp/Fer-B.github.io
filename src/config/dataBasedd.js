@@ -1,20 +1,20 @@
 ﻿import Sequelize from 'sequelize'
-const hostname = 'mitchel-mrtp-2024-db.postgres.database.azure.com'
+const hostname = '127.0.0.1'
 const username = 'postgres'
-const password = 'sistemas123@'
-const database = 'impacto'
-const dbPort = 5432
+const password = '123'
+const database = 'Fer'
+const port = 5432
 const dialect = 'postgres'
 const sequelize = new Sequelize(database, username, password, {
     host: hostname,
-    port: dbPort,
+    port,
     dialect: dialect,
     operatorAliases: false,
     pool: {
-        max: 100,
-        min:0,
+        max: 10,
+        min: 0,
         acquire: 20000,
         idle: 5000
     }
 })
-export default sequelize;
+export default sequelize
